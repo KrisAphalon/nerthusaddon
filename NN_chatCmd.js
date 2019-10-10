@@ -16,11 +16,7 @@ nerthus.chatCmd.cards.loadCardsFromSession = function (ts)
     if (cards)
         return JSON.parse(cards)
 }
-nerthus.chatCmd.cards.pseudoRandom = function (seed)
-{
-    seed = (seed * 9301 + 49297) % 233280
-    return seed / 233280
-}
+
 nerthus.chatCmd.cards.getCardFromId = function (card_id)
 {
     let valueName, colorName
@@ -50,7 +46,7 @@ nerthus.chatCmd.cards.getCard = function (deck_id, ts, deck_type)
 {
     if (!this.currentDecks[deck_type][deck_id]) this.currentDecks[deck_type][deck_id] = []
 
-    const card_id = Math.floor(this.pseudoRandom(ts) * deck_type)
+    const card_id = Math.floor(nerthus.pseudoRandom(ts) * deck_type)
 
     const len = this.currentDecks[deck_type][deck_id].length
     if (len === deck_type)

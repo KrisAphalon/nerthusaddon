@@ -43,6 +43,12 @@ nerthus.startObservingMapChange_SI = function ()
     })
 }
 
+nerthus.pseudoRandom = function (seed)
+{
+    seed = (seed * 9301 + 49297) % 233280
+    return seed / 233280
+}
+
 nerthus.seasons = {SPRING: 1, SUMMER: 2, AUTUMN: 3, WINTER: 4}
 nerthus.season = function()
 {
