@@ -24,22 +24,20 @@ nerthus.NerthusSpec = [
 
 //lista radnych - możliwość używania komend chatowych i ranga "radny"
 nerthus.NerthusRad = [
-    'Umbrael Regis',
-    'Korano Ligatur'
+    "Umbrael Regis",
+    "Korano Ligatur"
 ]
 
 //Lista narratorów - możliwość używania *nar i ranga "bard" + 'Umbrael Regis'
 
 //PRZED KAŻDĄ KOLEJNĄ OSOBĄ MUSI ZNALEŹĆ SIĘ PRZECINEK!!!
 nerthus.NerthusNarr = [
-    'Svain',
     'Kostryn',
     'Materios Dragonius',
     'Rothe',
     'Argetus',
     'Kamivis',
-    'Victor Cane',
-    'Ney Talleyrand',
+    'Talxander Eademossa',
     'Yao Shasamo',
     'Rothen'
 ]
@@ -139,8 +137,10 @@ nerthus.mapsArr =
     //[4,11,'http://cdn.rawgit.com/akrzyz/nerthusaddon/master/maps/dolina_yss_zima.png']
     [4, 257, nerthus.addon.fileUrl("maps/Mythar - zima.png")],
 
-    //Werbin
+    // Torneg
+    // [0, 2, nerthus.addon.fileUrl("maps/Torneg.png")],
 
+    //Werbin
     [4, 9, nerthus.addon.fileUrl("maps/Werbin - zima.png")],
     [0, 9, nerthus.addon.fileUrl("maps/Werbin.png")],
 
