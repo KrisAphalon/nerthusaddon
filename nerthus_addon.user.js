@@ -10,13 +10,13 @@
 
 (function ()
 {
-    "use strict"
+    'use strict'
     let loadScript = function (scriptSrc)
     {
-        let script = document.createElement("script")
+        let script = document.createElement('script')
         script.src = scriptSrc
         script.async = false
         document.head.appendChild(script)
     }
-    loadScript("https://krisaphalon.github.io/nerthusaddon/NN_start.js")
+    loadScript('https://krisaphalon.github.io/nerthusaddon/NN_start.js')
 })()
