@@ -1,22 +1,16 @@
 // ==UserScript==
-// @name         Nerthus NI
+// @name         Nerthus Addon
 // @namespace    http://www.margonem.pl/
-// @version      2.0
+// @version      2.10.6
 // @description  Addon for Nerthus
-// @author       Kris Aphalon
+// @author       Aldi, Kris Aphalon
 // @match        http://nerthus.margonem.pl/
-// @match        http://game3.margonem.pl/
 // ==/UserScript==
 
 (function ()
 {
-    'use strict'
-    let loadScript = function (scriptSrc)
-    {
-        let script = document.createElement('script')
-        script.src = scriptSrc
-        script.async = false
-        document.head.appendChild(script)
-    }
-    loadScript('https://krisaphalon.github.io/nerthusaddon/NN_start.js')
+    const script = document.createElement('script')
+    script.src = 'https://akrzyz.github.io/nerthusaddon/NN_start.js'
+    script.async = false
+    document.head.appendChild(script)
 })()
