@@ -28,7 +28,7 @@ nerthus.panel.constructElement = {}
 nerthus.panel.constructElement.button = function(data)
 {
     return  (
-        '<a href="' + data.url + '" target="_blank" class="button" tip="' + data.name + '">' +
+        '<a href="' + data.url + '" target="_blank" class="button" tip="' + data.name + '" data-tip="' + data.name + '">' +
             '<img src="' + nerthus.addon.fileUrl('img/panel/' + data.icon) + '" alt="' + data.name + '">' +
         '</a>'
     )
@@ -106,7 +106,7 @@ nerthus.panel.constructElement.panel = function (buttonGroupLeft, buttonGroupCen
                 '<div class="settings-panel hidden">' +
                     settings +
                 '</div>' +
-                '<button class="button nerthus-settings-button" tip="Ustawienia">' +
+                '<button class="button nerthus-settings-button" tip="Ustawienia" data-tip="Ustawienia">' +
                     '<img src="' + nerthus.addon.fileUrl('img/panel/settings.png') + '" alt="Ustawienia">' +
                 '</button>' +
             '</div>' +
@@ -155,12 +155,16 @@ nerthus.panel.createPanel = function (data, hidden)
             .end()
             .find(".close-button, .cancel-button, .ok-button").click(function ()
         {
-            nerthus.panel.$elm.remove()
+            nerthus.panel.$elm.css({visibility: 'hidden', opacity: '0'}) // reset opacity as we're still holding reference
+            defaultPanel.removeClass("hidden")
+            settingsPanel.addClass("hidden")
         }).end()
             .find(".save-button").click(function ()
         {
             nerthus.panel.saveSettings()
-            nerthus.panel.$elm.remove()
+            nerthus.panel.$elm.css({visibility: 'hidden', opacity: '0'}) // reset opacity as we're still holding reference
+            defaultPanel.removeClass("hidden")
+            settingsPanel.addClass("hidden")
         }).end()
 
         this.$elm
@@ -194,13 +198,15 @@ nerthus.panel.preloadPanel = function ()
         })
 }
 
-nerthus.panel.showPanel = function ()
+nerthus.panel.togglePanel = function ()
 {
     if (!this.$elm.parent || !this.$elm.parent('body').length)
         $.getJSON(nerthus.addon.fileMasterUrl('panel_links.json'), function (data)
         {
             nerthus.panel.createPanel.bind(nerthus.panel, data, false)()
         })
+    else if (this.$elm.css('visibility') === 'visible')
+        this.$elm.css({visibility: 'hidden', opacity: '0'})
     else
         this.$elm.css({visibility: 'visible', opacity: '1'})
 }
@@ -250,7 +256,7 @@ nerthus.panel.start = function ()
     {
         $(this.constructElement.icon())
             .hover(this.preloadPanel.bind(this))
-            .click(this.showPanel.bind(this))
+            .click(this.togglePanel.bind(this))
             .appendTo('#panel')
     }.bind(this))
 }
@@ -270,7 +276,7 @@ nerthus.panel.start_ni = function ()
                 nerthus.panel.defaultPosition[1],
                 'Nerthus',
                 'green',
-                nerthus.panel.showPanel.bind(nerthus.panel)
+                nerthus.panel.togglePanel.bind(nerthus.panel)
             )
         }
     }
@@ -282,7 +288,7 @@ nerthus.panel.start_ni = function ()
             nerthus.panel.defaultPosition[1],
             'Nerthus',
             'green',
-            nerthus.panel.showPanel.bind(nerthus.panel)
+            nerthus.panel.togglePanel.bind(nerthus.panel)
         )
     }
     this.create_button_ni()
