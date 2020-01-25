@@ -267,7 +267,6 @@ nerthus.npc.compose = function (npc)
         })
         .attr("id", "npc" + npc.id)
         .addClass("nerthus_npc")
-        .click(this.click_wrapper(npc, click))
         .appendTo('#base')
         .load(function ()
         {  //wyśrodkowanie w osi x i wyrównanie do stóp w osi y
@@ -279,7 +278,9 @@ nerthus.npc.compose = function (npc)
     if (npc.nick)
         $npc.attr("ctip", "t_npc")
             .attr("tip", npc.nick)
-
+    if (click) {
+        $npc.click(this.click_wrapper(npc, click))
+    }
     return $npc
 }
 
@@ -319,23 +320,24 @@ nerthus.npc.click_wrapper = function (npc, click_handler)
 
 nerthus.npc.deploy = function (npc)
 {
-    if(npc.type === "delete")
+    if (!this.is_deployable(npc)) return
+    switch (npc.type)
     {
-        if(!this.is_deployable(npc) || !this.is_deletable(npc))
-            return
-        nerthus.worldEdit.hideGameNpc(npc.id)
-    }
-    else
-    {
-        if (!this.is_deployable(npc))
-            return
+        case 'delete':
+            if (!this.is_deletable(npc))
+                return
+            nerthus.worldEdit.hideGameNpc(npc.id, npc.lvl === 0)
+            break
+        case 'change':
+            nerthus.worldEdit.changeGameNpc(npc)
+            break
+        default:
+            const tip = npc.hasOwnProperty('tip') ? npc.tip : '<b>' + npc.name + '</b>'
+            const customNpc = new this.CustomNpc(npc.x, npc.y, npc.url, tip, npc.collision, npc.dialog)
 
-        const tip = npc.hasOwnProperty("tip") ? npc.tip : "<b>" + npc.name + "</b>"
-        const customNpc = new this.CustomNpc(npc.x, npc.y, npc.url, tip, npc.collision, npc.dialog)
-
-        this.list[customNpc.id] = customNpc
-        this.compose(customNpc)
-        this.set_collision(customNpc)
+            this.list[customNpc.id] = customNpc
+            this.compose(customNpc)
+            this.set_collision(customNpc)
     }
 }
 
@@ -398,13 +400,15 @@ nerthus.npc.date.parse_to_date = function(date_str) //DD.MM.YYYY
     date.setFullYear(year, month, day)
     return date
 }
-nerthus.npc.date.validate = function(npc)
+nerthus.npc.date.validate = function (npc)
 {
-    if(!npc.date)
+    if (!npc.date)
         return true
 
-    const begin = this.parse_to_date(npc.date.split("-")[0])
-    const end = this.parse_to_date(npc.date.split("-")[1])
+    let begin = this.parse_to_date(npc.date.split('-')[0])
+    const end = this.parse_to_date(npc.date.split('-')[1])
+    if (end < begin)
+        begin.setTime(begin.getTime() - 31556952000) //1 year prior, for winter dates for example 21.11-20.03
     const now = new Date()
     return begin <= now && now <= end
 }
