@@ -25,7 +25,6 @@ nerthus.NerthusSpec = [
 //lista radnych - możliwość używania komend chatowych i ranga "radny"
 nerthus.NerthusRad = [
     "Umbrael Regis",
-    "Riveth",
     "Astratas"
 ]
 
@@ -38,7 +37,6 @@ nerthus.NerthusNarr = [
     'Rothe',
     'Argetus',
     'Kamivis',
-    'Talxander Eademossa',
     'Yao Shasamo',
     'Rothen'
 ]
@@ -189,8 +187,6 @@ nerthus.mapsArr =
         [0, 3246, nerthus.addon.fileUrl('maps/Zapomniana kopalnia p.1.png')],
         [0, 3247, nerthus.addon.fileUrl('maps/Zapomniana kopalnia p.2.png')],
         [0, 3248, nerthus.addon.fileUrl('maps/Zapomniana kopalnia p.3.png')],
-
-        [0, 37, nerthus.addon.fileUrl('maps/Brama Północy.png')]
     ]
 
 //lista dodatkowych skryptów odpalanych w dodatku, tak na przyszłość - dodawać adres skryptu w apostrofach np: 'http://addons.margonem.pl/get/82.js'
